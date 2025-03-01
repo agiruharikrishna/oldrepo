@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Attendance</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <h1>Student Attendance Records</h1>
+
+    <div class="table-container">
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Attendance</th>
+            </tr>
+            <tr th:each="student : ${students}">
+                <td th:text="${student.id}"></td>
+                <td th:text="${student.name}"></td>
+                <td th:text="${student.attendance} ? 'Present' : 'Absent'"></td>
+            </tr>
+        </table>
+    </div>
+
+    <button class="back-button" onclick="window.location.href='/'">⬅ Back to Home</button>
+</body>
+</html>

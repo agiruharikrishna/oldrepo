@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Attendance</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <h1>Student Attendance Management</h1>
+
+    <form id="studentForm">
+        <input type="text" id="studentName" placeholder="Enter Student Name" required>
+        <button type="submit">Add Student</button>
+    </form>
+
+    <h2>Student List</h2>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Attendance</th>
+            <th>Action</th>
+        </tr>
+        <tr th:each="student : ${students}">
+            <td th:text="${student.id}"></td>
+            <td th:text="${student.name}"></td>
+            <td th:id="'attendance-status-' + ${student.id}" 
+                th:text="${student.attendance} ? 'Present' : 'Absent'">
+            </td>
+            <td>
+                <button th:onclick="'toggleAttendance(' + ${student.id} + ')'">
+                    Toggle Attendance
+                </button>
+            </td>
+        </tr>
+    </table>
+
+    <script src="/js/scripts.js"></script>
+</body>
+</html>
