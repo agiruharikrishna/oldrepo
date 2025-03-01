@@ -14,7 +14,7 @@ public class Student {
     private String name;
 
     @Column(nullable = false)
-    private boolean attendance = false;
+    private boolean attendance = false;  // Default is "Absent"
 
     // Default constructor (Required by JPA)
     public Student() {}
