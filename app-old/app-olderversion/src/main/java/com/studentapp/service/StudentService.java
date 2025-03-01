@@ -19,19 +19,23 @@ public class StudentService {
     }
 
     public Student addStudent(Student student) {
-    if (student.getName() == null || student.getName().trim().isEmpty()) {
-        throw new IllegalArgumentException("Student name cannot be empty");
+        if (student.getName() == null || student.getName().trim().isEmpty()) {
+            throw new IllegalArgumentException("Student name cannot be empty");
+        }
+        student.setAttendance(false); // Default to "Absent"
+        return studentRepository.save(student);
     }
-    student.setAttendance(false); // Default attendance is false
-    return studentRepository.save(student);
-}
 
-    public Student toggleAttendance(Long id) {
-        return studentRepository.findById(id)
-                .map(student -> {
-                    student.setAttendance(!student.isAttendance());  // Toggle attendance
-                    return studentRepository.save(student);
-                })
-                .orElse(null);
+    public String toggleAttendance(Long id) {
+        Optional<Student> optionalStudent = studentRepository.findById(id);
+
+        if (optionalStudent.isPresent()) {
+            Student student = optionalStudent.get();
+            student.setAttendance(!student.isAttendance());  // Toggle attendance
+
+            studentRepository.save(student);
+            return student.isAttendance() ? "Present" : "Absent";
+        }
+        return null;
     }
 }
