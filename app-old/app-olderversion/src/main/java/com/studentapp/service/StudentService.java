@@ -18,12 +18,13 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
-    public Student addStudent(String name) {
-        Student student = new Student();
-        student.setName(name);
-        student.setAttendance(false); // Default attendance is false
-        return studentRepository.save(student);
+    public Student addStudent(Student student) {
+    if (student.getName() == null || student.getName().trim().isEmpty()) {
+        throw new IllegalArgumentException("Student name cannot be empty");
     }
+    student.setAttendance(false); // Default attendance is false
+    return studentRepository.save(student);
+}
 
     public Student toggleAttendance(Long id) {
         return studentRepository.findById(id)
