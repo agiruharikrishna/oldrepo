@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
+@RequestMapping("/students")
 public class StudentController {
 
     @Autowired
@@ -23,16 +24,17 @@ public class StudentController {
         return "index";
     }
 
-    @PostMapping("/addStudent")
+    @PostMapping("/add")
     public ResponseEntity<String> addStudent(@RequestBody Student student) {
-        studentService.addStudent(student.getName());
-        return ResponseEntity.ok("Student added successfully");
+        Student savedStudent = studentService.addStudent(student);
+        return ResponseEntity.ok("Student added successfully with ID: " + savedStudent.getId());
     }
 
-    @PutMapping("/updateAttendance/{id}")
-    public ResponseEntity<Student> updateAttendance(@PathVariable Long id) {
-        Student updatedStudent = studentService.toggleAttendance(id);
-        return updatedStudent != null ? ResponseEntity.ok(updatedStudent) : ResponseEntity.notFound().build();
+    @PutMapping("/toggleAttendance/{id}")
+    public ResponseEntity<String> toggleAttendance(@PathVariable Long id) {
+        String status = studentService.toggleAttendance(id);
+        return status != null 
+                ? ResponseEntity.ok("Attendance updated: " + status) 
+                : ResponseEntity.notFound().build();
     }
 }
-
